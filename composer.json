@@ -1,0 +1,14 @@
+{
+    "name": "wizacha/thephp6framework",
+    "description": "The one and only PHP 6 framework!",
+    "license": "MIT",
+    "type": "library",
+    "autoload": {
+        "files": [
+            "theframework.php"
+        ]
+    },
+    "require": {
+        "php": "^6.0"
+    }
+}
