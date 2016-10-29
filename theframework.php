@@ -5,7 +5,7 @@
 /* -----------------------------------------------------------------------------*/
 
 // FRAMEWORK CORE
-function test(array $middlewares)
+function run(array $middlewares)
 {
     $next = 'nothing';
     foreach (array_reverse($middlewares) as $middleware) {
