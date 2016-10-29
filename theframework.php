@@ -11,7 +11,7 @@ function test(array $middlewares)
     foreach (array_reverse($middlewares) as $middleware) {
         $next = array(new LazyNext($middleware, $next), 'run');
     }
-    $next();
+    call_user_func($next);
 }
 
 class LazyNext
