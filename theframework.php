@@ -46,6 +46,7 @@ function route(array $middlewares, $next = null)
             return;
         }
 
+        // No route was configured for this request
         $next();
     };
 }
