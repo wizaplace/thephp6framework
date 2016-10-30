@@ -1,0 +1,8 @@
+version: '2'
+services:
+  web:
+    image: vdechenaux/php-6-apache
+    ports:
+     - "8000:80"
+    volumes:
+     - .:/var/www/html
