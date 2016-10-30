@@ -40,7 +40,7 @@ $app = pipe(array(
     'security_middleware',
     route(array(
         '/' => function () {
-            echo 'Hello world!;
+            echo 'Hello world!';
         },
     )),
 ));
