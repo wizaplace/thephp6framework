@@ -7,31 +7,14 @@
 // FRAMEWORK CORE
 function run(array $middlewares)
 {
-    $next = 'nothing';
+    $next = function () {};
     foreach (array_reverse($middlewares) as $middleware) {
-        $next = array(new LazyNext($middleware, $next), 'run');
+        $next = function () use ($middleware, $next) {
+            $middleware($next);
+        };
     }
-    call_user_func($next);
+    $next();
 }
-
-class LazyNext
-{
-    function __construct($middleware, $next)
-    {
-        $this->middleware = $middleware;
-        $this->next = $next;
-    }
-    function run()
-    {
-        // Put the variable in the local scope so that it's available in the middleware
-        $next = $this->next;
-        // TODO replace eval with Closures if they are ever implemented in PHP
-        eval($this->middleware);
-    }
-}
-
-// Does nothing
-function nothing() {}
 
 
 /* -----------------------------------------------------------------------------*/
@@ -42,7 +25,7 @@ function nothing() {}
 
 // Secures the application BIG TIME
 // @see http://php.net/manual/en/security.magicquotes.php
-function security_middleware()
+function security_middleware($next)
 {
     if (isset($_GET)) {
         foreach ($_GET as &$value) {
@@ -59,4 +42,6 @@ function security_middleware()
             $value = addslashes($value);
         }
     }
+
+    $next();
 }
