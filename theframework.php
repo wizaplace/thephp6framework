@@ -4,16 +4,59 @@
 /*                                 THEPHP6FRAMEWORK                             */
 /* -----------------------------------------------------------------------------*/
 
-// FRAMEWORK CORE
-function run(array $middlewares)
+/**
+ * Create a pipe middleware.
+ *
+ * @param array $middlewares List of middlewares.
+ * @param callable|null $next
+ * @return callable The middleware created.
+ */
+function pipe(array $middlewares, $next = null)
 {
-    $next = function () {};
-    foreach (array_reverse($middlewares) as $middleware) {
-        $next = function () use ($middleware, $next) {
-            $middleware($next);
-        };
-    }
-    $next();
+    // next can be null so that this can be used simply as the root function for the application
+    $next = $next ? $next : 'last_handler';
+
+    return function () use ($middlewares, $next) {
+        foreach (array_reverse($middlewares) as $middleware) {
+            $next = function () use ($middleware, $next) {
+                $middleware($next);
+            };
+        }
+        $next();
+    };
+}
+
+/**
+ * Create a router middleware.
+ *
+ * @param array $middlewares Map of URL => middleware.
+ * @param callable|null $next
+ * @return callable The middleware created.
+ */
+function route(array $middlewares, $next = null)
+{
+    // next can be null so that this can be used simply as the root function for the application
+    $next = $next ? $next : 'last_handler';
+
+    return function () use ($middlewares, $next) {
+        $url = $_SERVER['REQUEST_URI'];
+
+        if (isset($middlewares[$url])) {
+            $middlewares[$url]($next);
+            return;
+        }
+
+        $next();
+    };
+}
+
+/**
+ * Last handler to call when no middleware wants to generate a response.
+ */
+function last_handler()
+{
+    http_send_status(404);
+    echo 'Page not found';
 }
 
 

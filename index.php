@@ -2,9 +2,13 @@
 
 require_once __DIR__ . '/theframework.php';
 
-run(array(
+$app = pipe(array(
     'security_middleware',
-    function ($next) {
-        echo 1;
-    },
+    route(array(
+        '/' => function () {
+            echo 1;
+        }
+    )),
 ));
+
+$app();
