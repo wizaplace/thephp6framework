@@ -19,15 +19,16 @@ Here is a short example:
 ```php
 require_once __DIR__ . '/theframework.php';
 
-run(array(
-    function ($next) {
-        echo 'Hello';
-        $next();
-    },
-    function ($next) {
-        echo ' World!';
-    },
+$app = pipe(array(
+    'security_middleware',
+    route(array(
+        '/' => function () {
+            echo 'Hello world!;
+        },
+    )),
 ));
+
+$app();
 ```
 
-This will display "Hello world!".
+This will display "Hello world!" on the home page.
