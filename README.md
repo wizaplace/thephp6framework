@@ -14,7 +14,24 @@ docker-compose up
 
 ## Usage
 
-Here is a short example:
+To build a simple application with different routes:
+
+```php
+require_once __DIR__ . '/theframework.php';
+
+$app = route(array(
+    '/' => function () {
+        echo 'The home page';
+    },
+    '/about' => function () {
+        echo 'The about page';
+    },
+));
+
+$app();
+```
+
+If you want to add middlewares before the router, simply use the pipe:
 
 ```php
 require_once __DIR__ . '/theframework.php';
@@ -30,5 +47,3 @@ $app = pipe(array(
 
 $app();
 ```
-
-This will display "Hello world!" on the home page.
