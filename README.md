@@ -152,7 +152,15 @@ $app();
 
 ### Advanced architecture
 
-If you want to add middlewares before the router, simply use the pipe:
+The great thing about thephp6framework is that everything is a middleware:
+
+- the router is a middleware
+- the pipe is a middleware
+- controllers are middlewares too
+
+Considering that, you can nest routers in pipes in controllers in pipes in routers…
+
+For example, if you want to add middlewares before the router, simply use the pipe:
 
 ```php
 $app = pipe(array(
