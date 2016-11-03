@@ -57,7 +57,7 @@ The request is retrievable via the native PHP way:
 
 The response can be emitted via the native PHP way:
 
-- `echo '...'` to output the body (using [`ob_start()`](http://php.net/manual/fr/function.ob-start.php) and similar functions to buffer the output)
+- `echo '...'` to output the body (using `capture()`, [`ob_start()`](http://php.net/manual/fr/function.ob-start.php) and similar functions to buffer the output)
 - [`header()`](http://php.net/manual/fr/function.header.php) to set headers
 
 Because of that, a middleware looks like this:
@@ -100,10 +100,7 @@ Even though the response is not an object, you can still write a middleware that
 
 ```php
 function cloud_to_butt($next) {
-    ob_start();
-    $next();
-    $html = ob_get_contents();
-    ob_end_clean();
+    $html = capture($next);
 
     $html = str_replace('the cloud', 'my butt', $html);
 
@@ -179,24 +176,6 @@ $app();
 
 - [moar middlewares!](https://github.com/wizacha/thephp6framework/blob/master/theframework.php#L65-L65)
 - allow placeholders in the router (regex with `preg_match()`?)
-- add a `capture()` function to simplify this:
-
-    ```php
-    ob_start();
-    $next();
-    $html = ob_get_contents();
-    ob_end_clean();
-    ```
-
-    to this:
-
-    ```php
-    $html = capture(function () {
-        return $next();
-    });
-    // or even ($next is already a callable)
-    $html = capture($next);
-    ```
 
 ## Learn more
 
