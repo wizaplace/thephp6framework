@@ -14,6 +14,10 @@ No.
 
 No.
 
+## Does it work on PHP 6?
+
+YES!
+
 ## Demo
 
 A demo is included in this package ([`index.php`](index.php)), just run this command and visit [http://localhost:8000/index.php](http://localhost:8000/index.php)
@@ -24,7 +28,7 @@ docker-compose up
 
 ## Deployment in production
 
-Compiling PHP 6 isn't easy, fortunately you can now deploy it straight to production thanks to this Docker image: [`vdechenaux/php-6-apache`](https://hub.docker.com/r/vdechenaux/php-6-apache/).
+Compiling PHP 6 isn't easy, fortunately you can now deploy it straight to production thanks to this Docker image: [`wizaplace/php-6-apache`](https://github.com/wizaplace/docker-php-6-apache).
 
 Have a look at our [docker-compose.yml](docker-compose.yml) to see how we use it.
 
