@@ -8,15 +8,14 @@
  * Create a pipe middleware.
  *
  * @param array $middlewares List of middlewares.
- * @param callable|null $next
  * @return callable The middleware created.
  */
-function pipe(array $middlewares, $next = null)
+function pipe(array $middlewares)
 {
-    // next can be null so that this can be used simply as the root function for the application
-    $next = $next ? $next : 'last_handler';
+    return function ($next = null) use ($middlewares) {
+        // next can be null so that this can be used simply as the root function for the application
+        $next = $next ? $next : 'last_handler';
 
-    return function () use ($middlewares, $next) {
         foreach (array_reverse($middlewares) as $middleware) {
             $next = function () use ($middleware, $next) {
                 $middleware($next);
@@ -30,15 +29,14 @@ function pipe(array $middlewares, $next = null)
  * Create a router middleware.
  *
  * @param array $middlewares Map of URL => middleware.
- * @param callable|null $next
  * @return callable The middleware created.
  */
-function route(array $middlewares, $next = null)
+function router(array $middlewares)
 {
-    // next can be null so that this can be used simply as the root function for the application
-    $next = $next ? $next : 'last_handler';
+    return function ($next = null) use ($middlewares) {
+        // next can be null so that this can be used simply as the root function for the application
+        $next = $next ? $next : 'last_handler';
 
-    return function () use ($middlewares, $next) {
         $url = $_SERVER['REQUEST_URI'];
 
         if (isset($middlewares[$url])) {
@@ -87,7 +85,7 @@ function security_middleware($next)
 
 // Cloud to butt
 // @see https://chrome.google.com/webstore/detail/cloud-to-butt-plus/apmlngnhgbnjpajelfkmabhkfapgnoai
-function cloud_to_butt(callable $next) {
+function cloud_to_butt($next) {
     ob_start();
     $next();
     $html = ob_get_contents();

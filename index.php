@@ -4,9 +4,10 @@ require_once __DIR__ . '/theframework.php';
 
 $app = pipe(array(
     'security_middleware',
-    route(array(
+    'cloud_to_butt',
+    router(array(
         '/' => function () {
-            echo 1;
+            echo 'Welcome in the cloud';
         }
     )),
 ));
