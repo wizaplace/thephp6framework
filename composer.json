@@ -1,6 +1,7 @@
 {
     "name": "wizaplace/thephp6framework",
     "description": "The one and only PHP 6 framework",
+    "keywords": ["PHP 6", "PHP6", "middlewares"],
     "type": "library",
     "license": "MIT",
     "require": {
