@@ -1,0 +1,9 @@
+{
+    "name": "wizaplace/thephp6framework",
+    "description": "The one and only PHP 6 framework",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "~6.0"
+    }
+}
