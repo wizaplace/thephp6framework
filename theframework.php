@@ -81,11 +81,19 @@ function security_middleware($next)
             $value = addslashes($value);
         }
     }
-    if (isset($_SESSION)) {
-        foreach ($_SESSION as &$value) {
-            $value = addslashes($value);
-        }
-    }
 
     $next();
+}
+
+// Cloud to butt
+// @see https://chrome.google.com/webstore/detail/cloud-to-butt-plus/apmlngnhgbnjpajelfkmabhkfapgnoai
+function cloud_to_butt(callable $next) {
+    ob_start();
+    $next();
+    $html = ob_get_contents();
+    ob_end_clean();
+
+    $html = str_replace('the cloud', 'my butt', $html);
+
+    echo $html;
 }
