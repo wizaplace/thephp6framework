@@ -167,6 +167,24 @@ $app();
 
 - [moar middlewares!](https://github.com/wizacha/thephp6framework/blob/master/theframework.php#L65-L65)
 - allow placeholders in the router (regex with `preg_match()`?)
+- add a `capture()` function to simplify this:
+
+    ```php
+    ob_start();
+    $next();
+    $html = ob_get_contents();
+    ob_end_clean();
+    ```
+
+    to this:
+
+    ```php
+    $html = capture(function () {
+        return $next();
+    });
+    // or even ($next is already a callable)
+    $html = capture($next);
+    ```
 
 ## Learn more
 
