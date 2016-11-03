@@ -63,7 +63,7 @@ The response can be emitted via the native PHP way:
 Because of that, a middleware looks like this:
 
 ```php
-function (callable $next) {
+function ($next) {
     // do something before the next middleware
 
     $next();
@@ -77,7 +77,7 @@ function (callable $next) {
 Even though the request is not an object, you can still write a middleware that will pre-process it (modify it) before invoking the next middleware:
 
 ```php
-function security_middleware(callable $next) {
+function security_middleware($next) {
     // Secure the application BIG TIME by replicating PHP magic quotes
     if (isset($_GET)) {
         foreach ($_GET as &$value) {
@@ -99,7 +99,7 @@ function security_middleware(callable $next) {
 Even though the response is not an object, you can still write a middleware that will modify the response returned by the next middleware:
 
 ```php
-function cloud_to_butt(callable $next) {
+function cloud_to_butt($next) {
     ob_start();
     $next();
     $html = ob_get_contents();
