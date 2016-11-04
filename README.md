@@ -57,7 +57,7 @@ The request is retrievable via the native PHP way:
 
 The response can be emitted via the native PHP way:
 
-- `echo '...'` to output the body (using `capture()`, [`ob_start()`](http://php.net/manual/fr/function.ob-start.php) and similar functions to buffer the output)
+- `echo '...'` to output the body ([`ob_start()`](http://php.net/manual/fr/function.ob-start.php) and similar functions to buffer the output)
 - [`header()`](http://php.net/manual/fr/function.header.php) to set headers
 
 Because of that, a middleware looks like this:
@@ -100,7 +100,11 @@ Even though the response is not an object, you can still write a middleware that
 
 ```php
 function cloud_to_butt($next) {
-    $html = capture($next);
+    // You could also use the framework's capture() function
+    ob_start();
+    $next();
+    $html = ob_get_contents();
+    ob_end_clean();
 
     $html = str_replace('the cloud', 'my butt', $html);
 
@@ -170,6 +174,31 @@ $app = pipe(array(
 ));
 
 $app();
+```
+
+### The `capture()` function
+
+The `capture()` function is a little helper from the framework around output buffering. Instead of this:
+
+```php
+ob_start();
+echo 'Hello world!';
+$output = ob_get_contents();
+ob_end_clean();
+```
+
+You can write this:
+
+```php
+$output = capture(function () {
+    echo 'Hello world!';
+});
+```
+
+That means that if you want to capture the output of the next middleware, you can simply do this (because `$next` is a callable):
+
+```php
+$html = capture($next);
 ```
 
 ## TODO
