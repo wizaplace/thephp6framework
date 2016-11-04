@@ -63,6 +63,22 @@ function last_handler()
     echo 'Page not found';
 }
 
+/**
+ * Permit to capture the text output of something callable to do post-processing
+ *
+ * @param callable $callable Something callable which produces text output
+ * @return string The text output of the given callable
+ */
+function capture($callable)
+{
+    ob_start();
+    $callable();
+    $content = ob_get_contents();
+    ob_end_clean();
+
+    return $content;
+}
+
 
 /* -----------------------------------------------------------------------------*/
 /*                              MIDDLEWARE MARKETPLACE                          */
@@ -91,11 +107,7 @@ function security_middleware($next)
 // Cloud to butt
 // @see https://chrome.google.com/webstore/detail/cloud-to-butt-plus/apmlngnhgbnjpajelfkmabhkfapgnoai
 function cloud_to_butt($next) {
-    ob_start();
-    $next();
-    $html = ob_get_contents();
-    ob_end_clean();
-
+    $html = capture($next);
     $html = str_replace('the cloud', 'my butt', $html);
 
     echo $html;
