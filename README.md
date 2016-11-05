@@ -2,7 +2,7 @@ The one and only PHP 6 framework.
 
 ## Why?
 
-Because PHP 6 rocks!
+Because PHP 6 is the future, but not too much the future at the same time!
 
 Oh and also this framework is a very simple introduction to **PHP middlewares**. It shows a very basic implementation of a framework based on middlewares without PSR-7 or even objects representing the request or the response.
 
