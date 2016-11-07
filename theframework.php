@@ -5,7 +5,7 @@
 /* -----------------------------------------------------------------------------*/
 
 // Very important feature: make sure we are running PHP 6
-if (strlen('🐟') > 1) {
+if (strlen('🐘') > 1) {
     die('THIS IS NOT PHP 6! FORBIDDEN!');
 }
 
