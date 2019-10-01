@@ -1,8 +1,11 @@
-version: '2'
+version: '3.5'
+
 services:
+
   web:
     image: wizaplace/php-6-apache
+    restart: unless-stopped
     ports:
-     - "8000:80"
+     - "${PHP6_PORT:-8000}:80"
     volumes:
      - .:/var/www/html
