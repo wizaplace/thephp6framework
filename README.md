@@ -79,14 +79,14 @@ Even though the request is not an object, you can still write a middleware that 
 ```php
 function security_middleware($next) {
     // Secure the application BIG TIME by replicating PHP magic quotes
-    if (isset($_GET)) {
+    if (\is_array($_GET)) {
         foreach ($_GET as &$value) {
-            $value = addslashes($value);
+            $value = \addslashes($value);
         }
     }
-    if (isset($_POST)) {
+    if (\is_array($_POST)) {
         foreach ($_POST as &$value) {
-            $value = addslashes($value);
+            $value = \addslashes($value);
         }
     }
 
@@ -101,12 +101,12 @@ Even though the response is not an object, you can still write a middleware that
 ```php
 function cloud_to_butt($next) {
     // You could also use the framework's capture() function
-    ob_start();
+    \ob_start();
     $next();
-    $html = ob_get_contents();
-    ob_end_clean();
+    $html = \ob_get_contents();
+    \ob_end_clean();
 
-    $html = str_replace('the cloud', 'my butt', $html);
+    $html = \str_replace('the cloud', 'my butt', $html);
 
     echo $html;
 }
